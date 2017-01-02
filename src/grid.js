@@ -56,15 +56,18 @@ c3_chart_internal_fn.updateXGrid = function (withoutUpdate) {
 
 c3_chart_internal_fn.updateYGrid = function () {
     var $$ = this, config = $$.config,
-        gridValues = $$.yAxis.tickValues() || $$.y.ticks(config.grid_y_ticks);
+        // NOTE(abe): 下記yAxis、$$.yをy2Axis、$$.y2に変更することで、入力データ値をyからy2に差し替え
+        gridValues = $$.y2Axis.tickValues() || $$.y2.ticks(config.grid_y_ticks);
+
     $$.ygrid = $$.main.select('.' + CLASS.ygrids).selectAll('.' + CLASS.ygrid)
         .data(gridValues);
     $$.ygrid.enter().append('line')
         .attr('class', CLASS.ygrid);
-    $$.ygrid.attr("x1", config.axis_rotated ? $$.y : 0)
-        .attr("x2", config.axis_rotated ? $$.y : $$.width)
-        .attr("y1", config.axis_rotated ? 0 : $$.y)
-        .attr("y2", config.axis_rotated ? $$.height : $$.y);
+    // NOTE(abe): 下記$$.yだった箇所を全て$$.y2に変更することで、y2の値を元にgrid引く
+    $$.ygrid.attr("x1", config.axis_rotated ? $$.y2 : 0)
+        .attr("x2", config.axis_rotated ? $$.y2 : $$.width)
+        .attr("y1", config.axis_rotated ? 0 : $$.y2)
+        .attr("y2", config.axis_rotated ? $$.height : $$.y2);
     $$.ygrid.exit().remove();
     $$.smoothLines($$.ygrid, 'grid');
 };

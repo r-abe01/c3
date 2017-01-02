@@ -3673,15 +3673,18 @@
 
     c3_chart_internal_fn.updateYGrid = function () {
         var $$ = this, config = $$.config,
-            gridValues = $$.yAxis.tickValues() || $$.y.ticks(config.grid_y_ticks);
+            // NOTE(abe): 下記yAxis、$$.yをy2Axis、$$.y2に変更することで、入力データ値をyからy2に差し替え
+            gridValues = $$.y2Axis.tickValues() || $$.y2.ticks(config.grid_y_ticks);
+
         $$.ygrid = $$.main.select('.' + CLASS.ygrids).selectAll('.' + CLASS.ygrid)
             .data(gridValues);
         $$.ygrid.enter().append('line')
             .attr('class', CLASS.ygrid);
-        $$.ygrid.attr("x1", config.axis_rotated ? $$.y : 0)
-            .attr("x2", config.axis_rotated ? $$.y : $$.width)
-            .attr("y1", config.axis_rotated ? 0 : $$.y)
-            .attr("y2", config.axis_rotated ? $$.height : $$.y);
+        // NOTE(abe): 下記$$.yだった箇所を全て$$.y2に変更することで、y2の値を元にgrid引く
+        $$.ygrid.attr("x1", config.axis_rotated ? $$.y2 : 0)
+            .attr("x2", config.axis_rotated ? $$.y2 : $$.width)
+            .attr("y1", config.axis_rotated ? 0 : $$.y2)
+            .attr("y2", config.axis_rotated ? $$.height : $$.y2);
         $$.ygrid.exit().remove();
         $$.smoothLines($$.ygrid, 'grid');
     };
@@ -4026,7 +4029,9 @@
     };
     c3_chart_internal_fn.transformLegend = function (withTransition) {
         var $$ = this;
-        (withTransition ? $$.legend.transition() : $$.legend).attr("transform", $$.getTranslate('legend'));
+
+        // NOTE(abe): 強制的にlegendの位置をチャート下部からチャート上部に移動
+        (withTransition ? $$.legend.transition() : $$.legend).attr("transform", 'translate(0, -30)');
     };
     c3_chart_internal_fn.updateLegendStep = function (step) {
         this.legendStep = step;
@@ -4203,7 +4208,8 @@
             xForLegend = function (id) { return maxWidth * steps[id] + 10; };
             yForLegend = function (id) { return margins[steps[id]] + offsets[id]; };
         } else {
-            xForLegend = function (id) { return margins[steps[id]] + offsets[id]; };
+            // NOTE(abe): LegendのX座標を中央寄せから左寄せに変更
+            xForLegend = function (id) { return 40 + offsets[id]; };
             yForLegend = function (id) { return maxHeight * steps[id]; };
         }
         xForLegendText = function (id, i) { return xForLegend(id, i) + 4 + config.legend_item_tile_width; };

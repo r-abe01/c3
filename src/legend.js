@@ -31,7 +31,9 @@ c3_chart_internal_fn.updateSizeForLegend = function (legendHeight, legendWidth) 
 };
 c3_chart_internal_fn.transformLegend = function (withTransition) {
     var $$ = this;
-    (withTransition ? $$.legend.transition() : $$.legend).attr("transform", $$.getTranslate('legend'));
+
+    // NOTE(abe): 強制的にlegendの位置をチャート下部からチャート上部に移動
+    (withTransition ? $$.legend.transition() : $$.legend).attr("transform", 'translate(0, -30)');
 };
 c3_chart_internal_fn.updateLegendStep = function (step) {
     this.legendStep = step;
@@ -208,7 +210,8 @@ c3_chart_internal_fn.updateLegend = function (targetIds, options, transitions) {
         xForLegend = function (id) { return maxWidth * steps[id] + 10; };
         yForLegend = function (id) { return margins[steps[id]] + offsets[id]; };
     } else {
-        xForLegend = function (id) { return margins[steps[id]] + offsets[id]; };
+        // NOTE(abe): LegendのX座標を中央寄せから左寄せに変更
+        xForLegend = function (id) { return 40 + offsets[id]; };
         yForLegend = function (id) { return maxHeight * steps[id]; };
     }
     xForLegendText = function (id, i) { return xForLegend(id, i) + 4 + config.legend_item_tile_width; };
