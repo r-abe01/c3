@@ -721,6 +721,8 @@
         // MEMO: this needs to be called before updateLegend and it means this ALWAYS needs to be called)
         $$.updateSizes();
         // MEMO: called in updateLegend in redraw if withLegend
+        console.log(options.withLegend);
+        console.log(config.legend_show);
         if (!(options.withLegend && config.legend_show)) {
             transitions = $$.axis.generateTransitions(options.withTransitionForAxis ? config.transition_duration : 0);
             // Update scales
