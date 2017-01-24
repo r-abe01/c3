@@ -9,3 +9,11 @@ build
 
 # coverage report
 /coverage
+.idea/c3-abe.iml
+.idea/compiler.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/sbt.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/copyright/profiles_settings.xml

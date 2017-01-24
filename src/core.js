@@ -846,6 +846,8 @@ c3_chart_internal_fn.transformAll = function (withTransition, transitions) {
     var $$ = this;
     $$.transformMain(withTransition, transitions);
     if ($$.config.subchart_show) { $$.transformContext(withTransition, transitions); }
+    console.log('$$.legend:');
+    console.log($$.legend);
     if ($$.legend) { $$.transformLegend(withTransition); }
 };
 

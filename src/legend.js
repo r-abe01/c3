@@ -32,6 +32,11 @@ c3_chart_internal_fn.updateSizeForLegend = function (legendHeight, legendWidth) 
 c3_chart_internal_fn.transformLegend = function (withTransition) {
     var $$ = this;
 
+    console.log('withTransition');
+    console.log(withTransition);
+    console.log($$.legend.transition());
+    console.log($$.legend);
+
     // NOTE(abe): 強制的にlegendの位置をチャート下部からチャート上部に移動
     (withTransition ? $$.legend.transition() : $$.legend).attr("transform", 'translate(0, -30)');
 };
