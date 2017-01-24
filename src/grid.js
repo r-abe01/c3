@@ -55,6 +55,8 @@ c3_chart_internal_fn.updateXGrid = function (withoutUpdate) {
 };
 
 c3_chart_internal_fn.updateYGrid = function () {
+    console.log('testtest');
+
     var $$ = this, config = $$.config,
         // NOTE(abe): 下記yAxis、$$.yをy2Axis、$$.y2に変更することで、入力データ値をyからy2に差し替え
         gridValues = $$.y2Axis.tickValues() || $$.y2.ticks(config.grid_y_ticks);
