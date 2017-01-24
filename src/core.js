@@ -716,8 +716,6 @@ c3_chart_internal_fn.updateAndRedraw = function (options) {
     // MEMO: this needs to be called before updateLegend and it means this ALWAYS needs to be called)
     $$.updateSizes();
     // MEMO: called in updateLegend in redraw if withLegend
-    console.log(options.withLegend);
-    console.log(config.legend_show);
     if (!(options.withLegend && config.legend_show)) {
         transitions = $$.axis.generateTransitions(options.withTransitionForAxis ? config.transition_duration : 0);
         // Update scales
@@ -848,8 +846,6 @@ c3_chart_internal_fn.transformAll = function (withTransition, transitions) {
     var $$ = this;
     $$.transformMain(withTransition, transitions);
     if ($$.config.subchart_show) { $$.transformContext(withTransition, transitions); }
-    console.log('$$.legend:');
-    console.log($$.legend);
     if ($$.legend) { $$.transformLegend(withTransition); }
 };
 

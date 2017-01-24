@@ -721,8 +721,6 @@
         // MEMO: this needs to be called before updateLegend and it means this ALWAYS needs to be called)
         $$.updateSizes();
         // MEMO: called in updateLegend in redraw if withLegend
-        console.log(options.withLegend);
-        console.log(config.legend_show);
         if (!(options.withLegend && config.legend_show)) {
             transitions = $$.axis.generateTransitions(options.withTransitionForAxis ? config.transition_duration : 0);
             // Update scales
@@ -853,8 +851,6 @@
         var $$ = this;
         $$.transformMain(withTransition, transitions);
         if ($$.config.subchart_show) { $$.transformContext(withTransition, transitions); }
-        console.log('$$.legend:');
-        console.log($$.legend);
         if ($$.legend) { $$.transformLegend(withTransition); }
     };
 
@@ -3677,8 +3673,6 @@
     };
 
     c3_chart_internal_fn.updateYGrid = function () {
-        console.log('testtest');
-
         var $$ = this, config = $$.config,
             // NOTE(abe): 下記yAxis、$$.yをy2Axis、$$.y2に変更することで、入力データ値をyからy2に差し替え
             gridValues = $$.y2Axis.tickValues() || $$.y2.ticks(config.grid_y_ticks);
@@ -4036,11 +4030,6 @@
     };
     c3_chart_internal_fn.transformLegend = function (withTransition) {
         var $$ = this;
-
-        console.log('withTransition');
-        console.log(withTransition);
-        console.log($$.legend.transition());
-        console.log($$.legend);
 
         // NOTE(abe): 強制的にlegendの位置をチャート下部からチャート上部に移動
         (withTransition ? $$.legend.transition() : $$.legend).attr("transform", 'translate(0, -30)');
